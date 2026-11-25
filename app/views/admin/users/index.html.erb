@@ -1,0 +1,22 @@
+<% content_for :title, "Користувачі" %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Користувачі</h1>
+  <%= link_to "Додати користувача", new_admin_user_path, class: "btn btn-primary" %>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped align-middle bg-white shadow-sm">
+    <thead><tr><th>ПІБ</th><th>Email</th><th>Роль</th><th>Телефон</th><th>Статус</th><th></th></tr></thead>
+    <tbody>
+      <% @users.each do |u| %>
+        <tr>
+          <td><%= u.full_name %></td>
+          <td><%= u.email %></td>
+          <td><%= u.role_name %></td>
+          <td><%= u.phone %></td>
+          <td><%= u.active? ? content_tag(:span, "Активний", class: "badge text-bg-success") : content_tag(:span, "Деактивований", class: "badge text-bg-secondary") %></td>
+          <td class="text-end"><%= link_to "Редагувати", edit_admin_user_path(u), class: "btn btn-sm btn-outline-primary" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

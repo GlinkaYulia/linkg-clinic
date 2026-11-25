@@ -1,0 +1,60 @@
+<% content_for :title, "Звіти" %>
+<h1 class="h3 mb-3">Звіт про роботу клініки</h1>
+
+<%= form_with url: admin_report_path, method: :get, class: "row g-2 mb-4 align-items-end" do |f| %>
+  <div class="col-auto">
+    <%= f.label :from, "З", class: "form-label" %>
+    <%= f.date_field :from, value: @from, class: "form-control" %>
+  </div>
+  <div class="col-auto">
+    <%= f.label :to, "По", class: "form-label" %>
+    <%= f.date_field :to, value: @to, class: "form-control" %>
+  </div>
+  <div class="col-auto">
+    <%= f.submit "Сформувати", name: nil, class: "btn btn-primary" %>
+    <%= link_to "Експорт у CSV", admin_report_path(format: :csv, from: @from, to: @to), class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
+
+<p class="text-muted">Період: <%= fmt_date(@from) %> — <%= fmt_date(@to) %>. Усього візитів: <strong><%= @total %></strong>. Отримано оплат: <strong><%= fmt_money(@revenue) %></strong>.</p>
+
+<div class="row g-3">
+  <div class="col-lg-4">
+    <h2 class="h5">За статусами</h2>
+    <table class="table table-striped bg-white shadow-sm">
+      <tbody>
+        <tr><td>Заплановано</td><td class="text-end"><%= @status_totals["scheduled"] %></td></tr>
+        <tr><td>Завершено</td><td class="text-end"><%= @status_totals["completed"] %></td></tr>
+        <tr><td>Скасовано</td><td class="text-end"><%= @status_totals["cancelled"] %></td></tr>
+      </tbody>
+    </table>
+    <h2 class="h5 mt-4">За спеціальностями</h2>
+    <table class="table table-striped bg-white shadow-sm">
+      <tbody>
+        <% @specialty_totals.sort.each do |name, total| %>
+          <tr><td><%= name %></td><td class="text-end"><%= total %></td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-8">
+    <h2 class="h5">За лікарями</h2>
+    <div class="table-responsive">
+      <table class="table table-striped bg-white shadow-sm">
+        <thead><tr><th>Лікар</th><th>Спеціальність</th><th>Заплан.</th><th>Заверш.</th><th>Скас.</th><th>Разом</th></tr></thead>
+        <tbody>
+          <% @rows.each do |r| %>
+            <tr>
+              <td><%= r[:doctor].full_name %></td>
+              <td><%= r[:doctor].specialty.name %></td>
+              <td><%= r[:counts]["scheduled"] %></td>
+              <td><%= r[:counts]["completed"] %></td>
+              <td><%= r[:counts]["cancelled"] %></td>
+              <td><strong><%= r[:total] %></strong></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

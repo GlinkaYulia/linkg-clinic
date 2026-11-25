@@ -1,0 +1,17 @@
+<%= render "shared/errors", record: record %>
+<%= form_with model: record, url: doctor_appointment_medical_record_path(appointment), method: method do |f| %>
+  <div class="mb-3">
+    <%= f.label :complaints, "Скарги", class: "form-label" %>
+    <%= f.text_area :complaints, rows: 3, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :diagnosis, "Діагноз", class: "form-label" %>
+    <%= f.text_area :diagnosis, rows: 2, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :prescription, "Призначення", class: "form-label" %>
+    <%= f.text_area :prescription, rows: 4, class: "form-control" %>
+  </div>
+  <%= f.submit submit_label, class: "btn btn-primary" %>
+  <%= link_to "Скасувати", doctor_schedule_path, class: "btn btn-link" %>
+<% end %>

@@ -1,0 +1,28 @@
+<%# Бічна навігаційна панель: пункти залежать від ролі, недоступні — не відображаються %>
+<nav class="nav flex-column py-3">
+  <% if current_user.patient? %>
+    <%= nav_link "Записатися на прийом", doctors_path, "calendar-plus" %>
+    <%= nav_link "Каталог послуг", services_path, "grid" %>
+    <%= nav_link "Кошик (#{cart_count})", cart_path, "cart3" %>
+    <%= nav_link "Мої візити", appointments_path, "calendar-check" %>
+    <%= nav_link "Історія та призначення", history_path, "journal-medical" %>
+    <%= nav_link "Зворотний зв’язок", contact_path, "chat-dots" %>
+    <%= nav_link "Профіль", profile_path, "person-circle" %>
+  <% elsif current_user.doctor? %>
+    <%= nav_link "Розклад", doctor_schedule_path, "calendar-week" %>
+    <%= nav_link "Мої пацієнти", doctor_patients_path, "people" %>
+    <%= nav_link "Зворотний зв’язок", contact_path, "chat-dots" %>
+    <%= nav_link "Профіль", profile_path, "person-circle" %>
+  <% elsif current_user.admin? %>
+    <%= nav_link "Панель", admin_root_path, "speedometer2" %>
+    <%= nav_link "Користувачі", admin_users_path, "people" %>
+    <%= nav_link "Візити та оплата", admin_appointments_path, "credit-card" %>
+    <%= nav_link "Лікарі та розклади", admin_doctors_path, "person-badge" %>
+    <%= nav_link "Спеціальності", admin_specialties_path, "tags" %>
+    <%= nav_link "Послуги", admin_services_path, "clipboard2-pulse" %>
+    <%= nav_link "Відгуки", admin_reviews_path, "star" %>
+    <%= nav_link "Звернення", admin_feedback_messages_path, "envelope" %>
+    <%= nav_link "Звіти", admin_report_path, "bar-chart" %>
+    <%= nav_link "Профіль", profile_path, "person-circle" %>
+  <% end %>
+</nav>

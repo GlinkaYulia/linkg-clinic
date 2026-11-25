@@ -1,0 +1,34 @@
+<% content_for :title, "Спеціальності" %>
+<h1 class="h3 mb-3">Спеціальності</h1>
+<div class="row g-3">
+  <div class="col-lg-6">
+    <table class="table table-striped align-middle bg-white shadow-sm">
+      <thead><tr><th>Назва</th><th>Лікарів</th><th></th></tr></thead>
+      <tbody>
+        <% @specialties.each do |s| %>
+          <tr>
+            <td><%= s.name %></td>
+            <td><%= s.doctor_profiles.size %></td>
+            <td class="text-end">
+              <%= button_to "Видалити", admin_specialty_path(s), method: :delete, class: "btn btn-sm btn-outline-danger",
+                            form_class: "d-inline", form: { onsubmit: "return confirm('Видалити спеціальність?');" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm"><div class="card-body">
+      <h2 class="h5">Нова спеціальність</h2>
+      <%= render "shared/errors", record: @specialty %>
+      <%= form_with model: @specialty, url: admin_specialties_path do |f| %>
+        <div class="mb-3">
+          <%= f.label :name, "Назва", class: "form-label" %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+        <%= f.submit "Додати", class: "btn btn-primary" %>
+      <% end %>
+    </div></div>
+  </div>
+</div>

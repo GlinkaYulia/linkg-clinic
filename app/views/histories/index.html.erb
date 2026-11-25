@@ -1,0 +1,30 @@
+<% content_for :title, "Історія та призначення" %>
+<h1 class="h3 mb-3">Історія та призначення</h1>
+<% if @appointments.empty? %>
+  <div class="alert alert-info">Завершених візитів поки немає.</div>
+<% end %>
+<% @appointments.each do |a| %>
+  <div class="card shadow-sm mb-3">
+    <div class="card-header">
+      <strong><%= fmt_dt(a.starts_at) %></strong> · <%= a.doctor_profile.full_name %>
+      <span class="badge text-bg-info"><%= a.doctor_profile.specialty.name %></span>
+    </div>
+    <% if a.medical_record %>
+      <div class="card-body">
+        <dl class="row mb-0">
+          <dt class="col-sm-3">Скарги</dt><dd class="col-sm-9"><%= a.medical_record.complaints %></dd>
+          <dt class="col-sm-3">Діагноз</dt><dd class="col-sm-9"><%= a.medical_record.diagnosis %></dd>
+          <dt class="col-sm-3">Призначення</dt><dd class="col-sm-9"><%= a.medical_record.prescription %></dd>
+        </dl>
+      </div>
+    <% end %>
+    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+      <span class="small text-muted">Сума: <%= fmt_money(a.total_price) %> · <%= payment_badge(a) %></span>
+      <% if a.review %>
+        <span><span class="text-warning"><%= stars(a.review.rating) %></span> <span class="small text-muted">ваш відгук</span></span>
+      <% else %>
+        <%= link_to "Залишити відгук", new_appointment_review_path(a), class: "btn btn-sm btn-outline-primary" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,22 @@
+<% content_for :title, "Мої пацієнти" %>
+<h1 class="h3 mb-3">Мої пацієнти</h1>
+<% if @patients.empty? %>
+  <div class="alert alert-info">До вас ще ніхто не записувався.</div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle bg-white shadow-sm">
+      <thead><tr><th>ПІБ</th><th>Телефон</th><th>Дата народження</th><th>Візитів до мене</th><th></th></tr></thead>
+      <tbody>
+        <% @patients.each do |p| %>
+          <tr>
+            <td><%= p.full_name %></td>
+            <td><%= p.phone %></td>
+            <td><%= p.birth_date && fmt_date(p.birth_date) %></td>
+            <td><%= @visit_counts[p.id].to_i %></td>
+            <td class="text-end"><%= link_to "Історія хвороби", doctor_patient_path(p), class: "btn btn-sm btn-outline-primary" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

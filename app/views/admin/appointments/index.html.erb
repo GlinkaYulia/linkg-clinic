@@ -1,0 +1,37 @@
+<% content_for :title, "Візити та оплата" %>
+<h1 class="h3 mb-3">Візити та оплата</h1>
+<%= form_with url: admin_appointments_path, method: :get, class: "row g-2 mb-3" do |f| %>
+  <div class="col-auto">
+    <%= f.select :status, [["Усі статуси", ""], ["Заплановано", "scheduled"], ["Завершено", "completed"], ["Скасовано", "cancelled"]],
+                 { selected: params[:status] }, class: "form-select" %>
+  </div>
+  <div class="col-auto">
+    <%= f.select :payment_status, [["Будь-яка оплата", ""], ["Не оплачено", "unpaid"], ["Оплачено", "paid"], ["Повернено", "refunded"]],
+                 { selected: params[:payment_status] }, class: "form-select" %>
+  </div>
+  <div class="col-auto"><%= f.submit "Фільтрувати", name: nil, class: "btn btn-primary" %></div>
+<% end %>
+<div class="table-responsive">
+  <table class="table table-striped align-middle bg-white shadow-sm">
+    <thead><tr><th>Дата</th><th>Пацієнт</th><th>Лікар</th><th>Послуги</th><th>Сума</th><th>Статус</th><th>Оплата</th><th></th></tr></thead>
+    <tbody>
+      <% @appointments.each do |a| %>
+        <tr>
+          <td><%= fmt_dt(a.starts_at) %></td>
+          <td><%= a.patient.full_name %></td>
+          <td><%= a.doctor_profile.full_name %></td>
+          <td class="small"><%= a.services.map(&:name).join(", ").presence || "—" %></td>
+          <td><%= fmt_money(a.total_price) %></td>
+          <td><%= status_badge(a) %></td>
+          <td><%= payment_badge(a) %><br><small class="text-muted"><%= a.payment_method_label %></small></td>
+          <td class="text-end">
+            <% if a.payment_unpaid? && !a.cancelled? %>
+              <%= button_to "Підтвердити оплату", mark_paid_admin_appointment_path(a), method: :patch,
+                            class: "btn btn-sm btn-outline-success", form_class: "d-inline" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

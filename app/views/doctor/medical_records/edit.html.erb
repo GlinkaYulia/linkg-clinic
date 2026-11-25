@@ -1,0 +1,6 @@
+<% content_for :title, "Редагування запису" %>
+<h1 class="h3 mb-1">Редагування медичного запису</h1>
+<p class="text-muted">Пацієнт: <strong><%= @appointment.patient.full_name %></strong> · прийом <%= fmt_dt(@appointment.starts_at) %></p>
+<div class="card shadow-sm col-lg-8"><div class="card-body">
+  <%= render "form", record: @record, appointment: @appointment, method: :patch, submit_label: "Зберегти зміни" %>
+</div></div>

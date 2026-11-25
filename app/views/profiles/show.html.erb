@@ -1,0 +1,32 @@
+<% content_for :title, "Профіль" %>
+<h1 class="h3 mb-3">Профіль</h1>
+<div class="card shadow-sm col-lg-6">
+  <div class="card-body">
+    <%= render "shared/errors", record: @user %>
+    <%= form_with model: @user, url: profile_path, method: :patch do |f| %>
+      <div class="mb-3">
+        <%= f.label :full_name, "ПІБ", class: "form-label" %>
+        <%= f.text_field :full_name, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :email, "Email", class: "form-label" %>
+        <%= f.email_field :email, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :phone, "Телефон", class: "form-label" %>
+        <%= f.telephone_field :phone, class: "form-control" %>
+      </div>
+      <hr>
+      <p class="text-muted small">Щоб змінити пароль, заповніть поля нижче. Інакше залиште їх порожніми.</p>
+      <div class="mb-3">
+        <%= f.label :password, "Новий пароль", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :password_confirmation, "Підтвердження пароля", class: "form-label" %>
+        <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+      </div>
+      <%= f.submit "Зберегти", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

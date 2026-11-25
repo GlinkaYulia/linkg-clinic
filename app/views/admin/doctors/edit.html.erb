@@ -1,0 +1,49 @@
+<% content_for :title, "Лікар та розклад" %>
+<h1 class="h3 mb-3"><%= @user.full_name %></h1>
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card shadow-sm"><div class="card-body">
+      <h2 class="h5 mb-3">Дані лікаря</h2>
+      <%= render "form", url: admin_doctor_path(@profile), method: :patch %>
+    </div></div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card shadow-sm"><div class="card-body">
+      <h2 class="h5 mb-3">Розклад роботи</h2>
+      <p class="text-muted small">Прийом триває 30 хвилин. Для кожного дня тижня задається початок і кінець роботи.</p>
+      <% if @profile.working_hours.empty? %>
+        <p class="text-muted">Розклад ще не налаштовано.</p>
+      <% else %>
+        <table class="table table-sm align-middle">
+          <tbody>
+            <% @profile.working_hours.each do |wh| %>
+              <tr>
+                <td><%= wh.weekday_name %></td>
+                <td><%= wh.start_time %> – <%= wh.end_time %></td>
+                <td class="text-end">
+                  <%= button_to "Видалити", admin_doctor_working_hour_path(@profile, wh), method: :delete,
+                                class: "btn btn-sm btn-outline-danger", form_class: "d-inline" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+      <hr>
+      <%= form_with scope: :working_hour, url: admin_doctor_working_hours_path(@profile), method: :post, class: "row g-2" do |f| %>
+        <div class="col-12">
+          <%= f.select :weekday, weekday_options, {}, class: "form-select" %>
+        </div>
+        <div class="col-6">
+          <%= f.select :start_time, time_options, { selected: "09:00" }, class: "form-select" %>
+        </div>
+        <div class="col-6">
+          <%= f.select :end_time, time_options, { selected: "16:00" }, class: "form-select" %>
+        </div>
+        <div class="col-12">
+          <%= f.submit "Додати день", class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div></div>
+  </div>
+</div>

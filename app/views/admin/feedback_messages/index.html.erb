@@ -1,0 +1,17 @@
+<% content_for :title, "Звернення" %>
+<h1 class="h3 mb-3">Звернення (зворотний зв’язок)</h1>
+<% if @messages.empty? %><div class="alert alert-info">Звернень поки немає.</div><% end %>
+<% @messages.each do |m| %>
+  <div class="card shadow-sm mb-2"><div class="card-body d-flex justify-content-between align-items-start gap-3">
+    <div>
+      <strong><%= m.subject %></strong>
+      <% if m.pending? %><span class="badge text-bg-warning ms-1">нове</span><% else %><span class="badge text-bg-success ms-1">опрацьовано</span><% end %>
+      <div class="small text-muted"><%= m.name %> · <%= m.email %> · <%= fmt_dt(m.created_at) %></div>
+      <p class="mb-0 mt-1"><%= m.body %></p>
+    </div>
+    <% if m.pending? %>
+      <%= button_to "Опрацьовано", mark_answered_admin_feedback_message_path(m), method: :patch,
+                    class: "btn btn-sm btn-outline-success", form_class: "d-inline" %>
+    <% end %>
+  </div></div>
+<% end %>

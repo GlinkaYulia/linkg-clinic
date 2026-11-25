@@ -1,0 +1,21 @@
+<% content_for :title, "Послуги" %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Каталог послуг</h1>
+  <%= link_to "Додати послугу", new_admin_service_path, class: "btn btn-primary" %>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped align-middle bg-white shadow-sm">
+    <thead><tr><th>Назва</th><th>Спеціальність</th><th>Ціна</th><th>Статус</th><th></th></tr></thead>
+    <tbody>
+      <% @services.each do |s| %>
+        <tr>
+          <td><%= s.name %></td>
+          <td><%= s.specialty&.name || "—" %></td>
+          <td><%= fmt_money(s.price) %></td>
+          <td><%= s.active? ? content_tag(:span, "Доступна", class: "badge text-bg-success") : content_tag(:span, "Прихована", class: "badge text-bg-secondary") %></td>
+          <td class="text-end"><%= link_to "Редагувати", edit_admin_service_path(s), class: "btn btn-sm btn-outline-primary" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

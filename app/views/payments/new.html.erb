@@ -1,0 +1,35 @@
+<% content_for :title, "Оплата візиту" %>
+<h1 class="h3 mb-3">Оплата візиту</h1>
+<div class="alert alert-warning">
+  Це навчальна <strong>імітація</strong> оплати: реальний платіжний шлюз не підключено, кошти не списуються, дані картки не зберігаються.
+  Для перевірки використовуйте тестову картку <code>4242 4242 4242 4242</code>, будь-який майбутній термін дії та CVV <code>123</code>.
+</div>
+<% if @errors.present? %>
+  <div class="alert alert-danger"><ul class="mb-0"><% @errors.each do |m| %><li><%= m %></li><% end %></ul></div>
+<% end %>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow-sm"><div class="card-body">
+      <p class="mb-1">Візит: <strong><%= fmt_dt(@appointment.starts_at) %></strong>, <%= @appointment.doctor_profile.full_name %></p>
+      <p class="fs-4">До сплати: <strong><%= fmt_money(@appointment.total_price) %></strong></p>
+      <%= form_with url: appointment_payment_path(@appointment), method: :post do |f| %>
+        <div class="mb-3">
+          <%= f.label :card_number, "Номер картки", class: "form-label" %>
+          <%= f.text_field :card_number, class: "form-control", placeholder: "0000 0000 0000 0000", autocomplete: "off", maxlength: 19 %>
+        </div>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <%= f.label :expiry, "Термін дії (ММ/РР)", class: "form-label" %>
+            <%= f.text_field :expiry, class: "form-control", placeholder: "12/30", autocomplete: "off", maxlength: 5 %>
+          </div>
+          <div class="col-6 mb-3">
+            <%= f.label :cvv, "CVV", class: "form-label" %>
+            <%= f.password_field :cvv, class: "form-control", autocomplete: "off", maxlength: 3 %>
+          </div>
+        </div>
+        <%= f.submit "Сплатити", name: nil, class: "btn btn-success" %>
+        <%= link_to "Оплатити пізніше", appointments_path, class: "btn btn-link" %>
+      <% end %>
+    </div></div>
+  </div>
+</div>

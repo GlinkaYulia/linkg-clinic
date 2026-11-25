@@ -1,0 +1,29 @@
+<div class="table-responsive">
+  <table class="table table-striped align-middle bg-white shadow-sm">
+    <thead>
+      <tr><th>Дата і час</th><th>Лікар</th><th>Статус</th><th>Сума</th><th>Оплата</th><th>Результати</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% appointments.each do |a| %>
+        <tr>
+          <td><%= fmt_dt(a.starts_at) %></td>
+          <td><%= a.doctor_profile.full_name %><br><small class="text-muted"><%= a.doctor_profile.specialty.name %>, каб. <%= a.doctor_profile.room %></small></td>
+          <td><%= status_badge(a) %></td>
+          <td><%= fmt_money(a.total_price) %></td>
+          <td><%= payment_badge(a) %><br><small class="text-muted"><%= a.payment_method_label %></small></td>
+          <td class="small"><%= a.delivery_label %></td>
+          <td class="text-end">
+            <% if a.payable_online? %>
+              <%= link_to "Оплатити", new_appointment_payment_path(a), class: "btn btn-sm btn-success mb-1" %>
+            <% end %>
+            <% if a.cancellable? %>
+              <%= button_to "Скасувати", cancel_appointment_path(a), method: :patch,
+                            class: "btn btn-sm btn-outline-danger", form_class: "d-inline",
+                            form: { onsubmit: "return confirm('Скасувати візит?');" } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

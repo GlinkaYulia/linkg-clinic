@@ -1,0 +1,38 @@
+<% content_for :title, "Розклад" %>
+<h1 class="h3 mb-3">Розклад</h1>
+
+<%= form_with url: doctor_schedule_path, method: :get, class: "row g-2 mb-4 align-items-end" do |f| %>
+  <div class="col-auto">
+    <%= f.label :date, "Дата", class: "form-label" %>
+    <%= f.date_field :date, value: @date, class: "form-control" %>
+  </div>
+  <div class="col-auto">
+    <%= f.label :range, "Період", class: "form-label" %>
+    <%= f.select :range, [["День", "day"], ["Тиждень", "week"]], { selected: @range }, class: "form-select" %>
+  </div>
+  <div class="col-auto">
+    <%= f.submit "Показати", name: nil, class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<% if @appointments.empty? %>
+  <div class="alert alert-info">Запланованих прийомів за цей період немає.</div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle bg-white shadow-sm">
+      <thead><tr><th>Дата і час</th><th>Пацієнт</th><th>Телефон</th><th></th></tr></thead>
+      <tbody>
+        <% @appointments.each do |a| %>
+          <tr>
+            <td><%= fmt_dt(a.starts_at) %></td>
+            <td><%= link_to a.patient.full_name, doctor_patient_path(a.patient) %></td>
+            <td><%= a.patient.phone %></td>
+            <td class="text-end">
+              <%= link_to "Розпочати прийом", new_doctor_appointment_medical_record_path(a), class: "btn btn-sm btn-primary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

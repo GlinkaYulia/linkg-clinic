@@ -1,0 +1,97 @@
+<% content_for :title, "Головна" %>
+<% if current_user&.patient? %>
+  <h1 class="h3">Вітаємо, <%= current_user.full_name.split[1] || current_user.full_name %>!</h1>
+
+  <div class="row g-3 mb-4">
+    <div class="col-lg-7">
+      <div class="card h-100">
+        <div class="card-header fw-semibold"><%= icon_tag "calendar-event" %> Найближчий візит</div>
+        <div class="card-body">
+          <% if @next_visit %>
+            <p class="fs-4 mb-1 fw-semibold"><%= fmt_dt(@next_visit.starts_at) %></p>
+            <p class="mb-0">
+              <%= @next_visit.doctor_profile.full_name %>
+              <span class="badge text-bg-info"><%= @next_visit.doctor_profile.specialty.name %></span>
+              <span class="text-body-secondary">· кабінет <%= @next_visit.doctor_profile.room %></span>
+            </p>
+          <% else %>
+            <p class="mb-0 text-body-secondary">Запланованих візитів немає.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <%= link_to doctors_path, class: "card card-hover quick-tile mb-3" do %>
+        <span class="feature-icon"><%= icon_tag "calendar-plus" %></span>
+        <span><strong>Записатися на прийом</strong><br><small class="text-body-secondary">Оберіть лікаря та вільний час</small></span>
+      <% end %>
+      <%= link_to services_path, class: "card card-hover quick-tile" do %>
+        <span class="feature-icon"><%= icon_tag "grid" %></span>
+        <span><strong>Каталог послуг</strong><br><small class="text-body-secondary">Аналізи, обстеження, процедури</small></span>
+      <% end %>
+    </div>
+  </div>
+
+<% elsif current_user&.doctor? %>
+  <h1 class="h3">Розклад на сьогодні</h1>
+  <% if @today.blank? %>
+    <div class="alert alert-info">На сьогодні запланованих прийомів немає.</div>
+  <% else %>
+    <div class="table-responsive mb-3">
+      <table class="table align-middle">
+        <thead><tr><th>Час</th><th>Пацієнт</th><th></th></tr></thead>
+        <tbody>
+          <% @today.each do |a| %>
+            <tr>
+              <td class="fw-semibold"><%= fmt_time(a.starts_at) %></td>
+              <td><%= a.patient.full_name %></td>
+              <td class="text-end">
+                <%= link_to "Розпочати прийом", new_doctor_appointment_medical_record_path(a), class: "btn btn-sm btn-primary" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  <%= link_to "Повний розклад", doctor_schedule_path, class: "btn btn-outline-primary" %>
+
+<% else %>
+  <section class="hero-section mb-4" <% if hero_style %>style="<%= hero_style %>"<% end %>>
+    <h1>Турбота про здоров’я — без черг</h1>
+    <p class="mb-4">LinkG Clinic: запис до лікаря онлайн, електронна історія візитів і призначень, зручна оплата послуг.</p>
+    <%= link_to "Записатися на прийом", doctors_path, class: "btn btn-light btn-lg me-2" %>
+    <%= link_to "Увійти", login_path, class: "btn btn-outline-light btn-lg" %>
+  </section>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-4"><div class="card feature-card">
+      <div class="feature-icon"><%= icon_tag "calendar2-check" %></div>
+      <h2 class="h6">Запис онлайн</h2>
+      <p class="text-body-secondary small mb-0">Оберіть лікаря й вільний час у кілька кліків, без дзвінків у реєстратуру.</p>
+    </div></div>
+    <div class="col-md-4"><div class="card feature-card">
+      <div class="feature-icon"><%= icon_tag "journal-medical" %></div>
+      <h2 class="h6">Електронна картка</h2>
+      <p class="text-body-secondary small mb-0">Діагнози й призначення завжди під рукою в особистому кабінеті.</p>
+    </div></div>
+    <div class="col-md-4"><div class="card feature-card">
+      <div class="feature-icon"><%= icon_tag "shield-check" %></div>
+      <h2 class="h6">Зручно й безпечно</h2>
+      <p class="text-body-secondary small mb-0">Різні способи оплати та отримання результатів, захист персональних даних.</p>
+    </div></div>
+  </div>
+
+  <h2 class="h5 mb-3">Наші спеціальності</h2>
+  <div class="mb-4">
+    <% @specialties.each do |s| %>
+      <%= link_to doctors_path(specialty_id: s.id), class: "specialty-pill" do %>
+        <%= icon_tag specialty_icon(s.name) %> <%= s.name %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to "Переглянути лікарів", doctors_path, class: "btn btn-primary" %>
+  <%= link_to "Каталог послуг", services_path, class: "btn btn-outline-primary" %>
+  <%= link_to "Зворотний зв’язок", contact_path, class: "btn btn-outline-secondary" %>
+<% end %>

@@ -1,0 +1,48 @@
+<% content_for :title, "Каталог послуг" %>
+<h1 class="h3 mb-3">Каталог послуг</h1>
+
+<%= form_with url: services_path, method: :get, class: "row g-2 mb-4" do |f| %>
+  <div class="col-md-4">
+    <%= f.text_field :q, value: params[:q], placeholder: "Пошук послуги…", class: "form-control" %>
+  </div>
+  <div class="col-md-3">
+    <%= f.select :specialty_id, options_from_collection_for_select(@specialties, :id, :name, params[:specialty_id]),
+                 { include_blank: "Усі спеціальності" }, class: "form-select" %>
+  </div>
+  <div class="col-md-3">
+    <%= f.select :sort, [["За назвою", "name"], ["Спочатку дешевші", "price_asc"], ["Спочатку дорожчі", "price_desc"]],
+                 { selected: params[:sort] }, class: "form-select" %>
+  </div>
+  <div class="col-auto">
+    <%= f.submit "Показати", name: nil, class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<% if @services.empty? %>
+  <div class="alert alert-info">Послуг за вашим запитом не знайдено.</div>
+<% end %>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
+  <% @services.each do |service| %>
+    <div class="col">
+      <div class="card card-hover h-100">
+        <% if File.exist?(Rails.public_path.join("services", "#{service.id}.jpg")) %><%= service_visual(service) %><% end %>
+        <div class="card-body">
+          <% unless File.exist?(Rails.public_path.join("services", "#{service.id}.jpg")) %><%= service_visual(service) %><% end %>
+          <h2 class="h5"><%= service.name %></h2>
+          <% if service.specialty %><span class="badge text-bg-info mb-2"><%= service.specialty.name %></span><% end %>
+          <p class="card-text text-muted"><%= service.description %></p>
+        </div>
+        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+          <strong class="fs-5"><%= fmt_money(service.price) %></strong>
+          <% if @in_cart.include?(service.id) %>
+            <%= link_to "У кошику ✓", cart_path, class: "btn btn-success btn-sm" %>
+          <% else %>
+            <%= button_to "У кошик", cart_items_path, params: { service_id: service.id }, method: :post,
+                          class: "btn btn-primary btn-sm", form_class: "d-inline" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

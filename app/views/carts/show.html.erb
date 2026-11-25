@@ -1,0 +1,33 @@
+<% content_for :title, "Кошик" %>
+<h1 class="h3 mb-3">Кошик послуг</h1>
+
+<% if @services.empty? %>
+  <div class="alert alert-info">
+    Кошик порожній. <%= link_to "Обрати послуги", services_path %> або
+    <%= link_to "записатися до лікаря", doctors_path %> на консультацію.
+  </div>
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle bg-white shadow-sm">
+      <thead><tr><th>Послуга</th><th>Спеціальність</th><th class="text-end">Ціна</th><th></th></tr></thead>
+      <tbody>
+        <% @services.each do |s| %>
+          <tr>
+            <td><%= s.name %></td>
+            <td><%= s.specialty&.name %></td>
+            <td class="text-end"><%= fmt_money(s.price) %></td>
+            <td class="text-end">
+              <%= button_to "Видалити", cart_item_path(s), method: :delete, class: "btn btn-sm btn-outline-danger", form_class: "d-inline" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr><th colspan="2">Разом за послуги</th><th class="text-end"><%= fmt_money(@total) %></th><th></th></tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="text-muted">Вартість консультації лікаря та доставки результатів додається під час оформлення візиту.</p>
+  <%= link_to "Обрати лікаря і час", doctors_path, class: "btn btn-primary" %>
+  <%= button_to "Очистити кошик", cart_path, method: :delete, class: "btn btn-outline-secondary", form_class: "d-inline" %>
+<% end %>

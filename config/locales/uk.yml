@@ -1,0 +1,58 @@
+uk:
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "не може бути порожнім"
+      required: "має бути вказано"
+      taken: "вже використовується"
+      invalid: "має неправильний формат"
+      inclusion: "має недопустиме значення"
+      too_short: "закоротке (мінімум %{count} символів)"
+      too_long: "задовге (максимум %{count} символів)"
+      confirmation: "не збігається з полем «%{attribute}»"
+      not_a_number: "має бути числом"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Помилка валідації: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "Неможливо видалити запис, бо існують пов’язані дані"
+          has_many: "Неможливо видалити запис, бо існують пов’язані дані"
+    attributes:
+      user:
+        full_name: "ПІБ"
+        email: "Email"
+        phone: "Телефон"
+        birth_date: "Дата народження"
+        password: "Пароль"
+        password_confirmation: "Підтвердження пароля"
+      specialty:
+        name: "Назва спеціальності"
+      doctor_profile:
+        room: "Кабінет"
+        specialty: "Спеціальність"
+        consultation_price: "Вартість консультації"
+      service:
+        name: "Назва послуги"
+        price: "Ціна"
+      review:
+        rating: "Оцінка"
+        body: "Відгук"
+        appointment_id: "Візит"
+      feedback_message:
+        name: "Ім’я"
+        email: "Email"
+        subject: "Тема"
+        body: "Повідомлення"
+      appointment:
+        starts_at: "Час прийому"
+        delivery_address: "Адреса доставки"
+        total_price: "Сума"
+      working_hour:
+        weekday: "День тижня"
+        start_time: "Початок роботи"
+        end_time: "Кінець роботи"
+      medical_record:
+        complaints: "Скарги"
+        diagnosis: "Діагноз"
+        prescription: "Призначення"

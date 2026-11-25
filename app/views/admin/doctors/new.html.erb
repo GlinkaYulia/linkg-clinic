@@ -1,0 +1,5 @@
+<% content_for :title, "Новий лікар" %>
+<h1 class="h3 mb-3">Новий лікар</h1>
+<div class="card shadow-sm col-lg-8"><div class="card-body">
+  <%= render "form", url: admin_doctors_path, method: :post %>
+</div></div>

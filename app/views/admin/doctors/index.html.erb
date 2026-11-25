@@ -1,0 +1,22 @@
+<% content_for :title, "Лікарі та розклади" %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Лікарі та розклади</h1>
+  <%= link_to "Додати лікаря", new_admin_doctor_path, class: "btn btn-primary" %>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped align-middle bg-white shadow-sm">
+    <thead><tr><th>Лікар</th><th>Спеціальність</th><th>Кабінет</th><th>Розклад</th><th>Статус</th><th></th></tr></thead>
+    <tbody>
+      <% @doctors.each do |d| %>
+        <tr>
+          <td><%= d.full_name %></td>
+          <td><%= d.specialty.name %></td>
+          <td><%= d.room %></td>
+          <td class="small"><%= d.schedule_summary.presence || "не налаштовано" %></td>
+          <td><%= d.user.active? ? content_tag(:span, "Активний", class: "badge text-bg-success") : content_tag(:span, "Деактивований", class: "badge text-bg-secondary") %></td>
+          <td class="text-end"><%= link_to "Налаштувати", edit_admin_doctor_path(d), class: "btn btn-sm btn-outline-primary" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

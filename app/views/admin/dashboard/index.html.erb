@@ -1,0 +1,52 @@
+<% content_for :title, "Панель" %>
+<h1 class="h3 mb-3">Панель адміністратора</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card shadow-sm stat"><div class="card-body">
+    <span class="feature-icon"><%= icon_tag "calendar-check" %></span>
+    <div><div class="text-muted small">Візитів на сьогодні</div><div class="display-6"><%= @today_count %></div></div>
+  </div></div></div>
+  <div class="col-md-4"><div class="card shadow-sm stat"><div class="card-body">
+    <span class="feature-icon"><%= icon_tag "people" %></span>
+    <div><div class="text-muted small">Пацієнтів</div><div class="display-6"><%= @patients_count %></div></div>
+  </div></div></div>
+  <div class="col-md-4"><div class="card shadow-sm stat"><div class="card-body">
+    <span class="feature-icon"><%= icon_tag "person-badge" %></span>
+    <div><div class="text-muted small">Лікарів</div><div class="display-6"><%= @doctors_count %></div></div>
+  </div></div></div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card shadow-sm stat"><div class="card-body">
+    <span class="feature-icon"><%= icon_tag "cash-stack" %></span>
+    <div><div class="text-muted small">Виручка за місяць</div><div class="display-6"><%= fmt_money(@revenue) %></div></div>
+  </div></div></div>
+  <div class="col-md-4"><div class="card shadow-sm stat"><div class="card-body">
+    <span class="feature-icon"><%= icon_tag "envelope" %></span>
+    <div><div class="text-muted small">Нових звернень</div><div class="display-6"><%= link_to @pending_feedback, admin_feedback_messages_path, class: "text-decoration-none" %></div></div>
+  </div></div></div>
+  <div class="col-md-4"><div class="card shadow-sm stat"><div class="card-body">
+    <span class="feature-icon"><%= icon_tag "credit-card" %></span>
+    <div><div class="text-muted small">Очікують онлайн-оплати</div><div class="display-6"><%= link_to @unpaid_online, admin_appointments_path(payment_status: "unpaid"), class: "text-decoration-none" %></div></div>
+  </div></div></div>
+</div>
+
+<h2 class="h5">Завантаженість лікарів</h2>
+<div class="table-responsive">
+  <table class="table table-striped align-middle bg-white shadow-sm">
+    <thead><tr><th>Лікар</th><th>Спеціальність</th><th>Сьогодні</th><th>Завантаженість</th><th>Найближчі 7 днів</th></tr></thead>
+    <tbody>
+      <% @load.each do |row| %>
+        <tr>
+          <td><%= row[:doctor].full_name %></td>
+          <td><%= row[:doctor].specialty.name %></td>
+          <td><%= row[:today] %> / <%= row[:capacity] %></td>
+          <td style="min-width: 140px;">
+            <progress class="w-100" value="<%= row[:today] %>" max="<%= [row[:capacity], 1].max %>"></progress>
+          </td>
+          <td><%= row[:week] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

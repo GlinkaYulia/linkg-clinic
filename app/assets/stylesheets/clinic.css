@@ -1,0 +1,233 @@
+/* LinkG Clinic — власні стилі поверх Bootstrap 5 (стримане світле оформлення) */
+
+:root {
+  --clinic-primary: #2f5d8a;
+  --clinic-primary-dark: #244a70;
+  --clinic-soft: #eaf1f8;
+  --clinic-bg: #f5f7fa;
+  --clinic-text: #1f2d3d;
+  --clinic-muted: #66768a;
+  --clinic-border: #e2e8f0;
+
+  /* кольори Bootstrap підлаштовано під палітру клініки */
+  --bs-primary: #2f5d8a;
+  --bs-primary-rgb: 47, 93, 138;
+  --bs-link-color: #2f5d8a;
+  --bs-link-color-rgb: 47, 93, 138;
+  --bs-link-hover-color: #244a70;
+  --bs-link-hover-color-rgb: 36, 74, 112;
+  --bs-body-color: #1f2d3d;
+  --bs-body-bg: #f5f7fa;
+  --bs-border-radius: 0.6rem;
+  --bs-border-radius-lg: 0.9rem;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  color: var(--clinic-text);
+  background-color: var(--clinic-bg);
+  font-size: 0.97rem;
+}
+
+h1, h2, h3, h4, h5 { font-weight: 600; letter-spacing: -0.01em; }
+h1.h3 { margin-bottom: 1.1rem; }
+
+/* ---------- Кнопки ---------- */
+.btn { font-weight: 500; border-radius: 0.55rem; }
+
+.btn-primary {
+  --bs-btn-bg: #2f5d8a; --bs-btn-border-color: #2f5d8a;
+  --bs-btn-hover-bg: #244a70; --bs-btn-hover-border-color: #244a70;
+  --bs-btn-active-bg: #1e3f60; --bs-btn-active-border-color: #1e3f60;
+  --bs-btn-disabled-bg: #2f5d8a; --bs-btn-disabled-border-color: #2f5d8a;
+}
+.btn-outline-primary {
+  --bs-btn-color: #2f5d8a; --bs-btn-border-color: #2f5d8a;
+  --bs-btn-hover-bg: #2f5d8a; --bs-btn-hover-border-color: #2f5d8a;
+  --bs-btn-active-bg: #244a70; --bs-btn-active-border-color: #244a70;
+}
+
+/* ---------- Верхня панель ---------- */
+.clinic-navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--clinic-border);
+  min-height: 60px;
+}
+.clinic-brand {
+  color: var(--clinic-primary);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+.clinic-brand:hover { color: var(--clinic-primary-dark); }
+.clinic-brand .bi { color: #d6455d; }   /* акцент: логотип-серце */
+.nav-top-link {
+  color: var(--clinic-text);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.4rem;
+}
+.nav-top-link:hover { background-color: var(--clinic-soft); color: var(--clinic-primary); }
+
+/* ---------- Бічна панель ---------- */
+.sidebar {
+  background-color: #ffffff;
+  border-right: 1px solid var(--clinic-border);
+  min-height: calc(100vh - 60px);
+}
+.sidebar .nav-link {
+  color: var(--clinic-text);
+  padding: 0.65rem 1.25rem;
+  border-left: 3px solid transparent;
+  font-size: 0.94rem;
+}
+.sidebar .nav-link .bi { width: 1.4rem; display: inline-block; color: var(--clinic-muted); }
+.sidebar .nav-link:hover { background-color: var(--clinic-bg); }
+.sidebar .nav-link.active {
+  background-color: var(--clinic-soft);
+  border-left-color: var(--clinic-primary);
+  color: var(--clinic-primary);
+  font-weight: 600;
+}
+.sidebar .nav-link.active .bi { color: var(--clinic-primary); }
+
+/* ---------- Картки ---------- */
+.card {
+  border: 1px solid var(--clinic-border);
+  border-radius: 0.85rem;
+  box-shadow: 0 1px 2px rgba(16, 38, 59, 0.04);
+}
+.card.shadow-sm { box-shadow: 0 1px 3px rgba(16, 38, 59, 0.06) !important; }
+.card-header { background-color: #fbfcfe; border-bottom: 1px solid var(--clinic-border); }
+.card-footer { border-top: 1px solid var(--clinic-border); }
+
+.card-hover { transition: box-shadow 0.15s ease, transform 0.15s ease; }
+.card-hover:hover { box-shadow: 0 6px 18px rgba(16, 38, 59, 0.10) !important; transform: translateY(-2px); }
+
+/* ---------- Таблиці ---------- */
+.table { --bs-table-bg: transparent; }
+.table-responsive {
+  background-color: #ffffff;
+  border: 1px solid var(--clinic-border);
+  border-radius: 0.85rem;
+  overflow: hidden;
+}
+.table-responsive > .table { margin-bottom: 0; }
+.table > thead > tr > th {
+  background-color: #f8fafc;
+  color: var(--clinic-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--clinic-border);
+  padding: 0.75rem 1rem;
+}
+.table > tbody > tr > td, .table > tfoot > tr > th { padding: 0.8rem 1rem; border-color: #eef2f6; vertical-align: middle; }
+.table-striped > tbody > tr:nth-of-type(odd) > * { --bs-table-bg-type: transparent; }
+.table > tbody > tr:hover > td { background-color: #f8fafc; }
+
+/* ---------- Форми ---------- */
+.form-control, .form-select { border-color: #d5dde7; border-radius: 0.55rem; }
+.form-control:focus, .form-select:focus {
+  border-color: var(--clinic-primary);
+  box-shadow: 0 0 0 0.2rem rgba(47, 93, 138, 0.15);
+}
+.form-label { font-weight: 500; font-size: 0.9rem; }
+
+.alert { border: 0; border-radius: 0.7rem; }
+.badge { font-weight: 500; }
+
+/* ---------- Головна (гість) ---------- */
+.hero-section {
+  background: linear-gradient(135deg, #2f5d8a 0%, #4a86b8 100%);
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  padding: 3.2rem 2.2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 14px rgba(36, 74, 112, 0.18);
+}
+.hero-section h1 { font-size: 2.2rem; font-weight: 700; }
+.hero-section p { max-width: 36rem; opacity: 0.95; font-size: 1.05rem; }
+
+.feature-card { text-align: center; padding: 1.4rem 1rem; height: 100%; }
+.feature-icon {
+  width: 52px; height: 52px; margin: 0 auto 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  background-color: var(--clinic-soft); color: var(--clinic-primary);
+  border-radius: 50%; font-size: 1.4rem;
+}
+.specialty-pill {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.45rem 0.95rem; margin: 0 0.4rem 0.5rem 0;
+  background-color: #ffffff; border: 1px solid var(--clinic-border); border-radius: 999px;
+  color: var(--clinic-text); text-decoration: none; font-weight: 500; font-size: 0.93rem;
+}
+.specialty-pill:hover { border-color: var(--clinic-primary); color: var(--clinic-primary); background-color: var(--clinic-soft); }
+.specialty-pill .bi { color: var(--clinic-primary); }
+
+.quick-tile {
+  display: flex; flex-direction: row !important; align-items: center; gap: 0.9rem; padding: 1.1rem 1.2rem;
+  color: var(--clinic-text); text-decoration: none;
+}
+.quick-tile:hover { color: var(--clinic-primary); }
+.quick-tile .feature-icon { margin: 0; flex-shrink: 0; }
+
+/* ---------- Аватари лікарів ---------- */
+.avatar { border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.avatar-initials {
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; letter-spacing: 0.02em;
+}
+.avatar-c0 { background: #dbe8f5; color: #2f5d8a; }
+.avatar-c1 { background: #dcf0ec; color: #217a6f; }
+.avatar-c2 { background: #efe6f7; color: #6b4a8f; }
+.avatar-c3 { background: #fbeedb; color: #9a6420; }
+.avatar-c4 { background: #f8e1e4; color: #a3394b; }
+
+/* ---------- Каталог послуг ---------- */
+.service-icon {
+  width: 46px; height: 46px; border-radius: 0.7rem; margin-bottom: 0.7rem;
+  display: flex; align-items: center; justify-content: center;
+  background-color: var(--clinic-soft); color: var(--clinic-primary); font-size: 1.3rem;
+}
+.service-photo { width: 100%; height: 150px; object-fit: cover; border-radius: 0.85rem 0.85rem 0 0; }
+
+/* ---------- Вільні слоти ---------- */
+.slot-btn {
+  min-width: 4.4rem; padding: 0.35rem 0.6rem; border-radius: 999px; font-size: 0.9rem; font-weight: 500;
+}
+
+/* ---------- Адмін-панель ---------- */
+.stat { height: 100%; }
+.stat .card-body { display: flex; align-items: center; gap: 1rem; }
+.stat .feature-icon { margin: 0; flex-shrink: 0; }
+.stat .display-6 { color: var(--clinic-primary); font-weight: 600; font-size: 1.7rem; line-height: 1.1; }
+
+progress { height: 0.55rem; accent-color: var(--clinic-primary); }
+
+/* ---------- Сторінки входу/реєстрації ---------- */
+.auth-icon {
+  width: 56px; height: 56px; margin: 0 auto 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  background-color: var(--clinic-soft); color: var(--clinic-primary);
+  border-radius: 50%; font-size: 1.6rem;
+}
+
+/* ---------- Підвал ---------- */
+.clinic-footer {
+  background-color: #ffffff;
+  border-top: 1px solid var(--clinic-border);
+  color: var(--clinic-muted);
+  font-size: 0.87rem;
+  padding: 1rem 0;
+}
+.clinic-footer .bi { color: var(--clinic-primary); }
+
+@media (max-width: 767.98px) {
+  .sidebar { min-height: auto; border-right: 0; border-bottom: 1px solid var(--clinic-border); }
+  .hero-section { padding: 2rem 1.3rem; }
+  .hero-section h1 { font-size: 1.7rem; }
+}

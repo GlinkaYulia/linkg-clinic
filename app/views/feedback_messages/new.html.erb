@@ -1,0 +1,39 @@
+<% content_for :title, "Зворотний зв’язок" %>
+<h1 class="h3 mb-3">Зворотний зв’язок</h1>
+<div class="row">
+  <div class="col-lg-7">
+    <div class="card shadow-sm"><div class="card-body">
+      <%= render "shared/errors", record: @message %>
+      <%= form_with model: @message, url: contact_path, method: :post do |f| %>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= f.label :name, "Ваше ім’я", class: "form-label" %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= f.label :email, "Email", class: "form-label" %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+        </div>
+        <div class="mb-3">
+          <%= f.label :subject, "Тема звернення", class: "form-label" %>
+          <%= f.text_field :subject, class: "form-control" %>
+        </div>
+        <div class="mb-3">
+          <%= f.label :body, "Повідомлення", class: "form-label" %>
+          <%= f.text_area :body, rows: 6, class: "form-control" %>
+        </div>
+        <%= f.submit "Надіслати", class: "btn btn-primary" %>
+      <% end %>
+    </div></div>
+  </div>
+  <div class="col-lg-5 mt-3 mt-lg-0">
+    <div class="card shadow-sm"><div class="card-body">
+      <h2 class="h5">Контакти клініки</h2>
+      <p class="mb-1">м. Івано-Франківськ, вул. Шевченка, 1</p>
+      <p class="mb-1">Тел.: +380 342 00-00-00</p>
+      <p class="mb-1">Email: info@linkg.clinic</p>
+      <p class="mb-0 text-muted">Працюємо: пн–пт 08:00–18:00</p>
+    </div></div>
+  </div>
+</div>

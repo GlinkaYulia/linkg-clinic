@@ -1,0 +1,16 @@
+<% content_for :title, "Мої візити" %>
+<h1 class="h3 mb-3">Мої візити</h1>
+
+<h2 class="h5">Майбутні</h2>
+<% if @upcoming.empty? %>
+  <div class="alert alert-info">Майбутніх візитів немає. <%= link_to "Записатися на прийом", doctors_path %></div>
+<% else %>
+  <%= render "table", appointments: @upcoming %>
+<% end %>
+
+<h2 class="h5 mt-4">Минулі</h2>
+<% if @past.empty? %>
+  <p class="text-muted">Минулих візитів ще не було.</p>
+<% else %>
+  <%= render "table", appointments: @past %>
+<% end %>
